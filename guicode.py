@@ -156,38 +156,29 @@ class SerialThread(threading.Thread):
 		serialData = SerialData(100) # maxLen = 100
 		serialPlot = SerialPlot(serialData)
 		
+		ser.write('1')
+
 		while var == 1:
 			try:
 				line = ser.readline()
-				if(line != "" and len(line) == 6):
-					if(line[4] == 'I'):
-						if(line[0] == '-'):
-							line = (float)(line[1:4])
-							line = -line
-						else:
-							line = line[1:4]
-							
+				line = line.strip()
+				strLen = len(line)
+				
+				if(line != ""):
+					if(line[strLen-1] == 'X'):
+						line = line[0:strLen-1]	
 						serialData.addx(line)
 						serialPlot.updateX(serialData)
 						app.accX_Update(line)
 					
-					elif(line[4] == 'J'):
-						if(line[0] == '-'):
-							line = (float)(line[1:4])
-							line = -line
-						else:
-							line = line[1:4]
-							
+					elif(line[strLen-1] == 'Y'):
+						line = line[0:strLen-1]	
 						serialData.addy(line)
 						serialPlot.updateY(serialData)
 						app.accY_Update(line)
 					
-					elif(line[4] == 'K'):
-						if(line[0] == '-'):
-							line = (float)(line[1:4])
-							line = -line
-						else:
-							line = line[1:4]
+					elif(line[strLen-1] == 'Z'):
+						line = line[0:strLen-1]
 						serialData.addz(line)
 						serialPlot.updateZ(serialData)
 						app.accZ_Update(line)
@@ -198,6 +189,7 @@ class SerialThread(threading.Thread):
 				print 'exiting'
 				break
 		else:
+			ser.write('2')
 			ser.flushInput()
 			ser.close()
 			plt.savefig('testplot.png')
