@@ -190,7 +190,7 @@ int main(void)
 			UART_puts("\n");
 		}
 
-		__delay_cycles(100000);
+		__delay_cycles(5000000);
 	}
 }
 
