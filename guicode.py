@@ -6,11 +6,15 @@ import serial
 import Tkinter
 import threading
 import numpy as np
-import matplotlib.pyplot as plt
+import matplotlib
+matplotlib.use('TkAgg')
+import pylab
 import tkMessageBox
 from collections import deque
 
 var = 0
+
+plt = matplotlib.pylab
 
 class acc_gui(Tkinter.Tk):
 	
